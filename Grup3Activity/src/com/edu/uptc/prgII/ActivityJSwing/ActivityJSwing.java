@@ -37,16 +37,19 @@ public class ActivityJSwing {
     private static JMenuBar menuBar = new JMenuBar();
     private static JMenu menu1 = new JMenu("popupWindows");
     private static JMenu menu2 = new JMenu("BackGround");
+ 
 
 
     /**
      * this method instance the frame.
      */
     public static void activateframe() {
-        frame.setBounds(65, 65, 850, 650);
+    	frame.setPreferredSize(frame.getToolkit().getScreenSize());
+    	frame.setSize(frame.getToolkit().getScreenSize());
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
     }
 
     /**
@@ -132,7 +135,7 @@ public class ActivityJSwing {
      * in this method we create a Jlist whit 3 or more items.
      */
     public static void ListExample() {
-        String[] data = {"Item 1", "Item 2", "Item 3"};  
+        String[] data = {"Item 1", "Item 2", "Item 3","Item 4"};  
         JList<String> list = new JList<>(data);
         list.setBounds(30, 120, 150, 55);
         frame.add(list);
@@ -145,66 +148,100 @@ public class ActivityJSwing {
      * each one.
      */
     public static void popupWindows() {
-        JMenuBar menuBar = new JMenuBar();
-        frame.setJMenuBar(menuBar);
-
-        JMenu menu1 = new JMenu("popupWindows");
-        menuBar.add(menu1);
-
-        JMenuItem menuItem1 = new JMenuItem("JDesktopPane");
-        menuItem1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+       menuBar = new JMenuBar(); 
+       JMenuItem menuItem1 = new JMenuItem("JDesktopPane");
+        	menuItem1.addActionListener(new ActionListener() {
+        		@Override
+            	public void actionPerformed(ActionEvent e) {
                 JDesktopPane desktopPane = new JDesktopPane();
-                // Do something with the desktopPane
+                JInternalFrame internalFrame = new JInternalFrame("Mi JInternalFrame", true, true, true, true);
+                internalFrame.setBounds(20, 200, 200, 200); // Establecemos la posición y tamaño
+                internalFrame.setVisible(true);
+                desktopPane.add(internalFrame);
+                frame.add(internalFrame);
+                JInternalFrame internalFrame1 = new JInternalFrame("Mi JInternalFrame", true, true, true, true);
+                internalFrame1.setBounds(800, 50, 200, 200); // Establecemos la posición y tamaño
+                internalFrame1.setVisible(true);
+                frame.add(internalFrame1);
+                
+                JInternalFrame internalFrame2 = new JInternalFrame("Mi JInternalFrame", true, true, true, true);
+                internalFrame2.setBounds(1050, 50, 200, 200); // Establecemos la posición y tamaño
+                internalFrame2.setVisible(true);
+                frame.add(internalFrame2);
+                
+                JInternalFrame internalFrame3 = new JInternalFrame("Mi JInternalFrame", true, true, true, true);
+                internalFrame3.setBounds(800, 300, 200, 200); // Establecemos la posición y tamaño
+                internalFrame3.setVisible(true);
+                frame.add(internalFrame3);
+                
+                JInternalFrame internalFrame4 = new JInternalFrame("Mi JInternalFrame", true, true, true, true);
+                internalFrame4.setBounds(1050, 300, 200, 200); // Establecemos la posición y tamaño
+                internalFrame4.setVisible(true);
+                frame.add(internalFrame4);
+                frame.repaint();
+                
             }
         });
 
         JMenuItem menuItem2 = new JMenuItem("JLayeredPane");
         menuItem2.addActionListener(new ActionListener() {
+        	
             @Override
             public void actionPerformed(ActionEvent e) {
-                JLayeredPane layeredPane = new JLayeredPane();
-                layeredPane.add(new JPanel(), new Integer(0));
-                layeredPane.add(new JPanel(), new Integer(1));
-                layeredPane.add(new JPanel(), new Integer(2));
-                // Do something with the layeredPane
+            	JLayeredPane layeredPane=new JLayeredPane();
+                JPanel panel1 = new JPanel();
+                panel1.setBackground(Color.RED);
+                panel1.setBounds(400, 30, 200, 250);
+
+                JPanel panel2 = new JPanel();
+                panel2.setBackground(Color.GREEN);
+                panel2.setBounds(430, 50, 200, 250);
+
+                JPanel panel3 = new JPanel();
+                panel3.setBackground(Color.BLUE);
+                panel3.setBounds(460, 70, 200, 250);
+                
+                // Creamos el JLayeredPane y le asignamos la posición de cada panel
+                layeredPane.setPreferredSize(new Dimension(800, 800));
+                layeredPane.add(panel1, 0);
+                layeredPane.add(panel2, Integer.valueOf(1));
+                layeredPane.add(panel3, Integer.valueOf(2));
+                // Añadimos el JLayeredPane al JFrame
+                frame.add(panel1);
+                frame.add(panel2);
+                frame.add(panel3);
+                frame.repaint();
+                
+                
             }
         });
-
+        JMenuItem item3=new JMenuItem("Modo oscuro");
+        item3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.getContentPane().setBackground(Color.black);
+			}
+		});
+        JMenuItem item4=new JMenuItem("Modo claro");
+        item4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+			}
+		});
+        
+        menu1 = new JMenu("PopupWindows");
+        
+        menu2 = new JMenu("Background");
         menu1.add(menuItem1);
         menu1.add(menuItem2);
-
-        // Creamos el JInternalFrame y lo añadimos al desktop pane
-        JInternalFrame internalFrame = new JInternalFrame("Mi JInternalFrame", true, true, true, true);
-        internalFrame.setBounds(20, 200, 200, 200); // Establecemos la posición y tamaño
-        internalFrame.setVisible(true);
-
-        // Añadimos el desktop pane al panel principal
-        frame.add(internalFrame, BorderLayout.CENTER);
-
-        // Establecemos el panel principal como contenido del JFrame
-        // frame.setContentPane(panel);
-
-        JLayeredPane layeredPane = new JLayeredPane();
-
-        JPanel panel1 = new JPanel();
-        panel1.setBounds(50, 50, 200, 200);
-        panel1.setBackground(Color.LIGHT_GRAY);
-
-        JPanel panel2 = new JPanel();
-        panel2.setBounds(100, 100, 200, 200);
-        panel2.setBackground(Color.CYAN);
-
-        JPanel panel3 = new JPanel();
-        panel3.setBounds(150, 150, 200, 200);
-        panel3.setBackground(Color.yellow);
-
-        layeredPane.add(panel1, new Integer(1));
-        layeredPane.add(panel2, new Integer(2));
-        layeredPane.add(panel3, new Integer(3));
-
-        frame.add(layeredPane);
+        menu2.add(item3);
+        menu2.add(item4);
+        menuBar.add(menu1);
+        menuBar.add(menu2);
+        frame.setJMenuBar(menuBar);
     }
 
     /**
@@ -215,30 +252,21 @@ public class ActivityJSwing {
      * grey or one of your preference.
      */
     public static void setColor() {
-        JPanel panel1 = new JPanel();
-        panel1.setBackground(Color.RED);
-        panel1.setBounds(400, 150, 200, 200);
-
-        JPanel panel2 = new JPanel();
-        panel2.setBackground(Color.BLUE);
-        panel2.setBounds(450, 200, 200, 200);
-
-        JPanel panel3 = new JPanel();
-        panel3.setBackground(Color.GREEN);
-        panel3.setBounds(500, 250, 200, 200);
-
-        // Creamos el JLayeredPane y le asignamos la posición de cada panel
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(800, 800));
-        layeredPane.add(panel1, new Integer(0));
-        layeredPane.add(panel2, Integer.valueOf(1));
-        layeredPane.add(panel3, Integer.valueOf(2));
-
-        // Añadimos el JLayeredPane al JFrame
-        frame.add(layeredPane);
-        frame.pack();
-
-        frame.getContentPane().setBackground(Color.BLACK);
+        JMenuItem item1 = new JMenuItem("Modo oscuro");
+        JMenuItem item2 = new JMenuItem("Modo claro");
+        item1.addActionListener(e->{
+            frame.setBackground(Color.black);
+            
+ 
+        });
+        item2.addActionListener(e->{
+            frame.setBackground(Color.lightGray);
+           
+        });
+        menu2.add(item1);
+        menu2.add(item2);
+        menuBar.add(menu2);
+        frame.setJMenuBar(menuBar);
     }
 
     /**
@@ -246,15 +274,14 @@ public class ActivityJSwing {
      */
     public static void runner() {
         popupWindows();// vale 1.
-        setColor();// vale 1.
         JSpiner();// vale 1
         JbuttonGrupExample();// vale 1
         ListExample();// vale 1
         checkBox1();// se deja de ejemplo.
         checkBox2();// se deja de ejemplo.
-        activateframe();// este es el activador del frame.
-
+        activateframe();// este es el activador del frame.       
     }
+   
 
     public static void main(String[] args) {
         runner();
